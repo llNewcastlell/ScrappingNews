@@ -27,22 +27,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeNews";
+var MONGODB_URI = process.env.MONGODB_URI;
+var databaseUri = "mongodb://localhost/scrapeNews";
+
+if(process.env.MONGODB_URI){
+  mongoose.connect(process.env.MONGODB_URI,{ useNewUrlParser: true });
+}else{
+  mongoose.connect(databaseUri);
+}
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+// mongoose.connect(MONGODB_URI);
 
-// Connect to the Mongo DB
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+// // Connect to the Mongo DB
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   db.Article.remove({}, function(dbArticle){
-    
+
   })
   // First, we grab the body of the html with request
   axios.get("http://www.developerdrive.com/").then(function(response) {
