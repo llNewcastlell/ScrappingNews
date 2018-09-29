@@ -30,8 +30,8 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI;
 var databaseUri = "mongodb://localhost/scrapeNews";
 
-if(process.env.MONGODB_URI){
-  mongoose.connect(process.env.MONGODB_URI,{ useNewUrlParser: true });
+if(MONGODB_URI){
+  mongoose.connect(MONGODB_URI,{ useNewUrlParser: true });
 }else{
   mongoose.connect(databaseUri);
 }
