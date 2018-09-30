@@ -22,24 +22,23 @@ var app = express();
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
 
-var MONGODB_URI = process.env.MONGODB_URI;
-var databaseUri = "mongodb://localhost/scrapeNews";
 
-if(MONGODB_URI){
-  mongoose.connect(MONGODB_URI,{ useNewUrlParser: true });
-}else{
-  mongoose.connect(databaseUri);
-}
+var MONGODB_URI ="mongodb://heroku_z8b46qcz:gmp80jm89jikim9gtaglumqnoj@ds119343.mlab.com:19343/heroku_z8b46qcz"
+
+// var MONGODB_URI ="mongodb://heroku_z8b46qcz:gmp80jm89jikim9gtaglumqnoj@ds119343.mlab.com:19343/heroku_z8b46qcz" || "mongodb://localhost/scrapeNews";
+
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-// mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
+console.log("******" + MONGODB_URI);
 
 // // Connect to the Mongo DB
 // mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
